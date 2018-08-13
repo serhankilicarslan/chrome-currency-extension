@@ -1,0 +1,21 @@
+{
+  "name": "Dollar Badge!",
+  "description": "Dollar Badge...",
+  "version": "0.1",
+  "manifest_version": 2,
+  "homepage_url": "https://github.com/serhankilicarslan/chrome-dolar-extension",
+  "background": {
+    "scripts": ["assets/js/price.js","assets/js/background.js"]
+  },
+  "browser_action": {
+    "default_icon":"./assets/icons/dollar-128.png",
+    "default_popup":"popup.html"
+  },
+  "author":"Serhan Kilicarslan <serhankilicarslan@gmail.com>",
+  "icons": { "16": "./assets/icons/dollar-16.png", "128": "./assets/icons/dollar-128.png" },
+  "permissions":[
+    "background",
+    "storage",
+    "https://www.doviz.com/"
+  ]
+}
