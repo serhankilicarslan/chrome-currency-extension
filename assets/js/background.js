@@ -39,7 +39,10 @@ function getData() {
 	    lastSelling = resp.selling;
 	    setBadge(lastSelling);
 	  }
-	}
+	  else {
+		setBadgeColor("black")
+	  }
+	} 
 	xhr.send();
 }
 
