@@ -1,6 +1,6 @@
 window.addEventListener("load", loadBackground());
 var interval = 10;
-var currency = "USD";
+var currency = "USDTRY=X";
 var lastSelling = store.get('selling');
 
 function loadBackground() {
@@ -20,23 +20,28 @@ function setBadge(price) {
 
 function getData() {
 	var xhr = new XMLHttpRequest();
-	xhr.open("GET", "https://www.doviz.com/api/v1/currencies/" + currency + "/latest", true);
+	xhr.open("GET", "https://query1.finance.yahoo.com/v6/finance/quote?&symbols=" + currency, true);
 	xhr.onreadystatechange = function() {
 	  if(xhr.readyState === 4 && xhr.status === 200) {
+	  	console.log(xhr.responseText)
 	    var resp = JSON.parse(xhr.responseText);
 	    if (resp == null) return;
-	    if (lastSelling == null || lastSelling == resp.selling) {
+	    var data = resp.quoteResponse.result[0];
+	    if (data.error != null) {
+	    	setBadgeColor("black")
+	    }
+	    else if (lastSelling == null || lastSelling == data.ask) {
 	    	setBadgeColor("blue")
 	    } 
-	    else if (lastSelling > resp.selling) {
+	    else if (lastSelling > data.ask) {
 	    	setBadgeColor("red")
 	    }
 	    else {
 	    	setBadgeColor("green")
 	    }
-	    store.set('selling', resp.selling);
-	    store.set('buying', resp.buying);
-	    lastSelling = resp.selling;
+	    store.set('selling', data.ask);
+	    store.set('buying', data.bid);
+	    lastSelling = data.ask;
 	    setBadge(lastSelling);
 	  }
 	  else {
